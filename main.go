@@ -1,11 +1,10 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/Hidayathamir/golang_rest_api/database"
 	"github.com/Hidayathamir/golang_rest_api/logger"
-	"github.com/gin-gonic/gin"
+	"github.com/Hidayathamir/golang_rest_api/migration"
+	"github.com/Hidayathamir/golang_rest_api/router"
 	"github.com/pkg/errors"
 )
 
@@ -15,12 +14,7 @@ func main() {
 		logger.GetLog().Error(err)
 		panic(errors.Wrap(err, "main.main"))
 	}
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		fmt.Println(db)
-		c.JSON(200, gin.H{
-			"message": "paaaangg",
-		})
-	})
+	migration.Automigrate(db)
+	r := router.GetRouter()
 	r.Run()
 }
