@@ -1,5 +1,7 @@
 # golang_rest_api
 
+Checkout the [task](https://github.com/Hidayathamir/golang_rest_api/blob/main/task/interview_golang_backend.md).
+
 ## 1. Project Setup and Execution
 
 To run the project, you can choose to either use Docker or run it manually.
