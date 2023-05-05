@@ -10,6 +10,7 @@ import (
 
 type IProductUsecase interface {
 	AddProduct(productInput dto.Product) (entity.Product, error)
+	GetProducts() ([]entity.Product, error)
 }
 
 type productUsecase struct {
@@ -29,4 +30,13 @@ func (pu *productUsecase) AddProduct(productInput dto.Product) (entity.Product, 
 		return product, errors.Wrap(err, "usecase.AddProduct")
 	}
 	return product, nil
+}
+
+func (pu *productUsecase) GetProducts() ([]entity.Product, error) {
+	products, err := pu.productRepository.GetProducts()
+	if err != nil {
+		logger.GetLog().Error(err)
+		return products, errors.Wrap(err, "usecase.GetProduct")
+	}
+	return products, nil
 }

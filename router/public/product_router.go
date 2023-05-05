@@ -7,4 +7,5 @@ import (
 
 func addProductRoute(r *gin.Engine, allHandler handler.AllHandler) {
 	r.POST("/products", allHandler.ProductHandler.AddProduct)
+	r.GET("/products", allHandler.ProductHandler.GetProducts)
 }

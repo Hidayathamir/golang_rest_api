@@ -12,6 +12,7 @@ import (
 
 type IProductHandler interface {
 	AddProduct(c *gin.Context)
+	GetProducts(c *gin.Context)
 }
 
 type productHandler struct {
@@ -41,4 +42,15 @@ func (ph *productHandler) AddProduct(c *gin.Context) {
 	}
 
 	helper.WriteRespon(c, http.StatusOK, "add product success", product)
+}
+
+func (ph *productHandler) GetProducts(c *gin.Context) {
+	products, err := ph.productUsecase.GetProducts()
+	if err != nil {
+		helper.WriteRespon(c, http.StatusBadRequest, err.Error(), nil)
+		logger.GetLog().Error(err)
+		return
+	}
+
+	helper.WriteRespon(c, http.StatusOK, "get products success", products)
 }

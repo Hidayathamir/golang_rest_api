@@ -11,6 +11,7 @@ import (
 
 type IProductRepository interface {
 	AddProduct(productInput dto.Product) (entity.Product, error)
+	GetProducts() ([]entity.Product, error)
 }
 
 type productRepository struct {
@@ -34,4 +35,13 @@ func (pr *productRepository) AddProduct(productInput dto.Product) (entity.Produc
 		return entity.Product{}, errors.Wrap(err, "repository.AddProduct")
 	}
 	return product, nil
+}
+
+func (pr *productRepository) GetProducts() ([]entity.Product, error) {
+	var products []entity.Product
+	if err := pr.db.Find(&products).Error; err != nil {
+		logger.GetLog().Error(err)
+		return []entity.Product{}, errors.Wrap(err, "repository.GetProduct")
+	}
+	return products, nil
 }
