@@ -28,5 +28,5 @@ func main() {
 	}
 
 	r := router.GetRouter(allHandler)
-	r.Run()
+	r.Run(":8081")
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/Hidayathamir/golang_rest_api/entity/dto"
 	"github.com/Hidayathamir/golang_rest_api/handler/helper"
 	"github.com/Hidayathamir/golang_rest_api/logger"
+	"github.com/Hidayathamir/golang_rest_api/repository"
 	"github.com/Hidayathamir/golang_rest_api/usecase"
 	"github.com/gin-gonic/gin"
 )
@@ -26,7 +27,7 @@ func NewProductHandler(productUsecase usecase.IProductUsecase) IProductHandler {
 }
 
 func (ph *productHandler) AddProduct(c *gin.Context) {
-	var productInput dto.Product
+	var productInput dto.AddProductRequest
 
 	if err := c.ShouldBindJSON(&productInput); err != nil {
 		helper.WriteRespon(c, http.StatusBadRequest, err.Error(), nil)
@@ -45,7 +46,12 @@ func (ph *productHandler) AddProduct(c *gin.Context) {
 }
 
 func (ph *productHandler) GetProducts(c *gin.Context) {
-	products, err := ph.productUsecase.GetProducts()
+	queryParam := repository.GetProductsQueryParam{
+		SortBy: c.DefaultQuery("sort_by", "updated_at"),
+		Sort:   c.DefaultQuery("sort", "desc"),
+	}
+
+	products, err := ph.productUsecase.GetProducts(queryParam)
 	if err != nil {
 		helper.WriteRespon(c, http.StatusBadRequest, err.Error(), nil)
 		logger.GetLog().Error(err)
