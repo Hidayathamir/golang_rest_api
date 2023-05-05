@@ -59,13 +59,13 @@ func (pr *productRepository) GetProducts(queryParam GetProductsQueryParam) ([]dt
 	chainMethod := pr.db.Order(fmt.Sprintf("%s %s", queryParam.SortBy, queryParam.Sort))
 	if err := chainMethod.Find(&products).Error; err != nil {
 		logger.GetLog().Error(err)
-		return []dto.GetProductResponse{}, errors.Wrap(err, "repository.GetProduct")
+		return []dto.GetProductResponse{}, errors.Wrap(err, "repository.GetProducts")
 	}
 
 	var productsResponse []dto.GetProductResponse
 	if err := copier.Copy(&productsResponse, &products); err != nil {
 		logger.GetLog().Error(err)
-		return []dto.GetProductResponse{}, errors.Wrap(err, "repository.GetProduct")
+		return []dto.GetProductResponse{}, errors.Wrap(err, "repository.GetProducts")
 	}
 
 	return productsResponse, nil

@@ -35,7 +35,7 @@ func (pu *productUsecase) GetProducts(queryParam repository.GetProductsQueryPara
 	products, err := pu.productRepository.GetProducts(queryParam)
 	if err != nil {
 		logger.GetLog().Error(err)
-		return products, errors.Wrap(err, "usecase.GetProduct")
+		return products, errors.Wrap(err, "usecase.GetProducts")
 	}
 	return products, nil
 }

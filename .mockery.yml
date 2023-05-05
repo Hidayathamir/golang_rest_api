@@ -1,0 +1,4 @@
+all: true
+case: "snake"
+keeptree: true
+recursive: true
