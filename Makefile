@@ -3,6 +3,6 @@ run:
 lint:
 	golangci-lint run
 compose-up:
-	docker compose up -d --build --force-recreate
+	docker compose up -d
 compose-down:
 	docker compose down
